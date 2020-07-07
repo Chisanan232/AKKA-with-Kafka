@@ -25,7 +25,7 @@ OS: MacOS (Current Version: 10.14.5), Windows OS (Current Version: Win10)
 <br>
 
 
-Need to install Kafka in environment (Or current environment could connect to Kafka broker) before start this projec. <br>
+Need to install Kafka in environment (Or current environment could connect to Kafka broker) before start this project. <br>
 
 Here are some basic elements of Kafka: <br>
 * Broker <br>
