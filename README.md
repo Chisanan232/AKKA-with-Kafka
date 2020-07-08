@@ -16,12 +16,7 @@ Framework: AKKA (version: 2.4.20) <br>
 Message Queue Server: Kafka (version: 2.5.0) <br>
 
 #### Environment
-##### For Developing
 OS: MacOS (Current Version: 10.14.5)
-
-#### For Running
-OS: MacOS (Current Version: 10.14.5), Windows OS (Current Version: Win10)
-
 <br>
 
 
