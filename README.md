@@ -44,9 +44,9 @@ Kafka is dependence to Zookeeper, so it's necessary to run zookeeper server befo
 
     zookeeper-server-start /usr/local/etc/kafka/zookeeper.properties
 
-/usr/local/etc/kafka/ is the directory path where save kafka configuration.
+'/usr/local/etc/kafka/' is the directory path where save kafka configuration.
 
-Run Kafka server after activate zookeeper. <br>
+Run Kafka server after activate Zookeeper. <br>
 
     kafka-server-start /usr/local/etc/kafka/server.properties
 
@@ -76,5 +76,13 @@ Access to the topic as Producer via command line. <br>
     kafka-console-producer --bootstrap-server <Kafka boker IP address with port> --topic <topic name>
 
 Send message to Kafka by Producer and get the meesage by Consumer. <br>
+
+If it be needed to shutdown Kafka service, please close it by command line: <br>
+
+    kafka-server-stop /usr/local/etc/kafka/server.properties
+
+For Zookeeper, so as <br>
+
+    zookeeper-server-stop /usr/local/etc/kafka/zookeeper.properties
 
 
