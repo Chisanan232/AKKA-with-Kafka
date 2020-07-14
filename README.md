@@ -19,7 +19,7 @@ Message Queue Server: Kafka (version: 2.5.0) <br>
 OS: MacOS (Current Version: 10.14.5)
 <br>
 
-
+### Pre-Process
 Need to install Kafka in environment (Or current environment could connect to Kafka broker) before start this project. <br>
 
 Here are some basic elements of Kafka: <br>
@@ -33,10 +33,11 @@ The application which produces message and send it to Kafka broker.
 The application which consumes message from Kafka broker.
 
 * Topic <br>
-The unit classifies message. In other words, like a queue type data saves all message with the name.
+A category name about saving-data to store or publish.
 
 * Partition <br>
-The smallest basic \'physically\' unit. A topic be composed of multiple partitions.
+A Kafka topic could be divided to multiple partitions. It's the smallest physically unit of saving data. <br>
+For option 'replication', it implement at partition level. In other words, option 'replication' and partition is related directly. That means how many replication amount it has, how many partition has data be recorded in Kafka. <br>
 
 <br>
 
@@ -85,4 +86,14 @@ For Zookeeper, so as <br>
 
     zookeeper-server-stop /usr/local/etc/kafka/zookeeper.properties
 
+
+Code Description
+===
+Some explanation about code which implement Kafka feature. <br>
+
+Producer
+---
+
+Consumer
+---
 
