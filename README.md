@@ -93,7 +93,41 @@ Some explanation about code which implement Kafka feature. <br>
 
 Producer
 ---
+Kafkak configuration all be set with a properties-file (No matter Kafka Producer or Consumer). <br>
+Hense build a properties setting object first: <br>
+
+```scala
+import java.util.Properties
+
+val props = new Properties()
+props.put("bootstrap.servers", KafkaConfig.BrokenNode)
+props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer")
+props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer")
+```
+
+Import the configuration into Producer. <br>
+
+```scala
+import org.apache.kafka.clients.producer.KafkaProducer
+
+val producer = new KafkaProducer[String, String](props))
+```
+
+In Kafka, it should initialize the message to be the object which including target Kafka Topic, Key and Value so that producer could send the message to Kafka. <br>
+
+```scala
+import org.apache.kafka.clients.producer.ProducerRecord
+
+val producerMsg = new ProducerRecord[String, String](topic, key, value)
+```
+
+Finish above all, send the message to Kafka from Producer. <br>
+
+```scala
+producer.send(producerMsg)
+```
 
 Consumer
 ---
+
 
