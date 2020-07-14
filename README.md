@@ -100,7 +100,7 @@ Hense build a properties setting object first: <br>
 import java.util.Properties
 
 val props = new Properties()
-props.put("bootstrap.servers", KafkaConfig.BrokenNode)
+props.put("bootstrap.servers", "10.0.0.1")
 props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer")
 props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer")
 ```
@@ -121,6 +121,8 @@ import org.apache.kafka.clients.producer.ProducerRecord
 val producerMsg = new ProducerRecord[String, String](topic, key, value)
 ```
 
+PS. Option 'key' value is not necessary. <br>
+
 Finish above all, send the message to Kafka from Producer. <br>
 
 ```scala
@@ -129,5 +131,49 @@ producer.send(producerMsg)
 
 Consumer
 ---
+Same as Producer first step in procedure, build a properties object first. <br>
+
+```scala
+val props = new Properties()
+props.put("bootstrap.servers", "10.0.0.1")
+props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer")
+props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer")
+props.put("group.id", "test")
+```
+
+Import the configuration into Consumer. <br>
+
+```scala
+import org.apache.kafka.clients.consumer.KafkaConsumer
+
+val consumer = new KafkaConsumer[String, String](props))
+```
+
+It's necessary that subscribe target Kafka Topic before get message. <br>
+
+```scala
+import java.util
+
+consumer.subscribe(util.Arrays.asList(topic))
+```
+
+By the way, it also could subscribe target topic with pointed partition. <br>
+
+```scala
+consumer.subscribe(util.Arrays.asList(topic, partition))
+```
+
+Start to consume message from Kafka. <br>
+
+```scala
+import scala.collection.JavaConverters._
+
+while (true) {
+  val records = consumer.poll(500).asScala
+  for (record <- records) {
+    println(record)
+  }
+}
+```
 
 
