@@ -27,14 +27,6 @@ class DataKing extends Actor with ActorLogging {
       dataPremier ! WaitData("Please wait for data.", this.allTaskNUmber)
 
 
-    case ProcessingAsk =>
-      if (this.shutdownSystemSignal.equals(true)) {
-        sender() ! "Program Finish."
-      } else {
-        sender() ! "Doesn't finish ..."
-      }
-
-
     case FinishTask(content) =>
       log.info("[King] Good job, man !")
       println(s"[DEBUG] currentDoneTaskNumber: $currentDoneTaskNumber")
