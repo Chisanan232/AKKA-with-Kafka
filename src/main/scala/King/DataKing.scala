@@ -23,7 +23,7 @@ class DataKing extends Actor with ActorLogging {
       val dataPremierRef = context.actorOf(Props[Premier], KafkaActorName.DataPremierName)
       val dataPremier = context.actorSelection(dataPremierRef.path)
       KafkaActorName.PremierPath = dataPremierRef.path.toString
-      dataPremier ! DataComing("We have something to do, my man.")
+      dataPremier ! DataComing("We have something to do, my man.", this.allTaskNUmber)
       dataPremier ! WaitData("Please wait for data.", this.allTaskNUmber)
 
 
