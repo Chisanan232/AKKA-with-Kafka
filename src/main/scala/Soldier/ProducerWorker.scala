@@ -44,6 +44,7 @@ class ProducerWorker extends Actor with ActorLogging {
       //      this.writeMsg(producer, s"this is key_$p", s"$data")
       this.writeMsg(workerTopic, s"this is key_test", s"$data")
       this.closeProducerActor()
+      context.parent ! ProduceDone
 
   }
 
