@@ -7,8 +7,10 @@ import java.util.Properties
 
 import scala.collection.JavaConverters._
 import scala.util.control.Breaks._
+
 import akka.actor.{Actor, ActorLogging}
 import org.apache.kafka.clients.consumer.KafkaConsumer
+import org.apache.kafka.common.TopicPartition
 
 
 class ConsumerWorker extends Actor with ActorLogging {
@@ -29,6 +31,17 @@ class ConsumerWorker extends Actor with ActorLogging {
     // For creating multiple Kafka Consumer.
     // https://stackoverflow.com/questions/53918333/scala-how-to-subscribe-to-multiple-kafka-topics/53918419
     consumer.subscribe(util.Arrays.asList(topic, partition))
+  }
+
+  def scanOnePartitionMsg(topic: String, partition: Int) (implicit consumer: KafkaConsumer[String, String]): Unit = {
+    /***
+     * Get all message of target topic with specific partition.
+     * https://stackoverflow.com/questions/60560311/read-messages-from-kafka-topic-between-a-range-of-offsets
+     */
+
+    val tp = new TopicPartition(topic, partition)
+    consumer.assign(util.Arrays.asList(tp))
+    consumer.seekToBeginning(util.Arrays.asList(tp))
   }
 
 
@@ -75,9 +88,11 @@ class ConsumerWorker extends Actor with ActorLogging {
       implicit val consumer = new KafkaConsumer[String, String](this.defineProps(consumerGroupID))
       log.info(s"This is consumer object $consumer")
       log.info("Successfully call consumer worker to do their job.")
-      this.workerTaskResponsibility("test", s"test_partition_$consumerID")
+//      this.workerTaskResponsibility("test", s"test_partition_$consumerID")
+      this.scanOnePartitionMsg("test", 0)
       this.getMsg(taskNumber)
       this.closeConsumerActor()
+      context.parent ! ConsumeDone
 
   }
 
