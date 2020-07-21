@@ -9,11 +9,14 @@ import akka.actor.{Actor, ActorLogging, ActorRef, Props}
 class ProducerLeader extends Actor with ActorLogging {
 
   val producerWorkerMemberNumber = 2
+  var allTasks: Int = _
+  var currentTasks = 0
 
   def receive: Receive = {
 
-    case CallKafkaProducer(content, data) =>
+    case CallKafkaProducer(content, data, taskNumber) =>
       log.info("Got it!")
+      allTasks = taskNumber
 
       val producerWorkers = new Array[ActorRef](this.producerWorkerMemberNumber)
       for (workerID <- 0.until(this.producerWorkerMemberNumber)) {
@@ -24,6 +27,15 @@ class ProducerLeader extends Actor with ActorLogging {
         val producerWorker = context.actorSelection(producerWorkerRef.path)
         producerWorker ! GenerateData("Hey, workers! You have job right now. Go Go Go!", s"$data")
       })
+
+
+    case ProduceDone =>
+      currentTasks += 1
+      log.info("Get the done signal.")
+      if (currentTasks.equals(allTasks)) {
+        log.info("Finish this task!")
+        context.system.terminate()
+      }
 
   }
 
