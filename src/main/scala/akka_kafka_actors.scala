@@ -31,23 +31,25 @@ object akka_kafka_actors extends App {
 }
 
 
-//object KafkaProducerMain extends App {
-//
-//  val system = ActorSystem("KafkaProducer")
-//  val kafkaProducerLeader = system.actorOf(Props[ProducerLeader], KafkaActorName.ProducerLeaderName)
-//  KafkaActorName.ProducerLeaderPath = kafkaProducerLeader.path.toString
-//  kafkaProducerLeader ! CallKafkaProducer("Here are some data detail.", "This should be the target data, I try it now !")
-//
-//}
-//
-//
-//object KafkaConsumerMain extends App {
-//
-//  val taskNumber = 0
-//
-//  val system = ActorSystem("KafkaProducer")
-//  val kafkaConsumerLeader = system.actorOf(Props[ConsumerLeader], KafkaActorName.ProducerLeaderName)
-//  KafkaActorName.ConsumerLeaderPath = kafkaConsumerLeader.path.toString
-//  kafkaConsumerLeader  ! CallKafkaConsumer("Hello, Consumer department guys, please wait for data, thank you.", taskNumber)
-//
-//}
+object KafkaProducerMain extends App {
+
+  val taskNumber = 2
+
+  val system = ActorSystem("KafkaProducer")
+  val kafkaProducerLeader = system.actorOf(Props[ProducerLeader], KafkaActorName.ProducerLeaderName)
+  KafkaActorName.ProducerLeaderPath = kafkaProducerLeader.path.toString
+  kafkaProducerLeader ! CallKafkaProducer("Here are some data detail.", "This should be the target data, I try it now !", taskNumber)
+
+}
+
+
+object KafkaConsumerMain extends App {
+
+  val taskNumber = 2
+
+  val system = ActorSystem("KafkaProducer")
+  val kafkaConsumerLeader = system.actorOf(Props[ConsumerLeader], KafkaActorName.ProducerLeaderName)
+  KafkaActorName.ConsumerLeaderPath = kafkaConsumerLeader.path.toString
+  kafkaConsumerLeader  ! CallKafkaConsumer("Hello, Consumer department guys, please wait for data, thank you.", taskNumber)
+
+}
