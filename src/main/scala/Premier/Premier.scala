@@ -10,7 +10,7 @@ class Premier extends Actor with ActorLogging {
 
   def receive: Receive = {
 
-    case DataComing(content) =>
+    case DataComing(content, taskNumber) =>
       log.info("Got it !")
       log.info("Hello, Producer department guys, we have task right now.")
       val senderPathRef = context.actorSelection(context.self.path)
@@ -18,7 +18,7 @@ class Premier extends Actor with ActorLogging {
       val kafkaProducerLeaderRef = context.actorOf(Props[ProducerLeader], KafkaActorName.ProducerLeaderName)
       val kafkaProducerLeader = context.actorSelection(kafkaProducerLeaderRef.path)
       KafkaActorName.ProducerLeaderPath = kafkaProducerLeaderRef.path.toString
-      kafkaProducerLeader ! CallKafkaProducer("Here are some data detail.", "This should be the target data, I try it now !")
+      kafkaProducerLeader ! CallKafkaProducer("Here are some data detail.", "This should be the target data, I try it now !", taskNumber)
 
 
     case WaitData(content, taskNumber) =>
